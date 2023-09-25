@@ -1,0 +1,10 @@
+.userImg{
+    height: 72px;
+    margin: 5px;
+    overflow: hidden;
+    object-fit: cover;
+    width: 55px;
+}
+.textComments{
+    font-size: 13px;
+}

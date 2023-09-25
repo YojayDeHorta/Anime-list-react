@@ -1,0 +1,10 @@
+.imgActors{
+    height: 72px;
+    margin: 5px;
+}
+.charactersBox{
+    font-size: 12px;
+}
+.charactersBox p{
+    margin: 0;
+}

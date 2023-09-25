@@ -1,0 +1,13 @@
+.read-more-button{
+    display: inline-block;
+    margin-left: 3px;
+    color: #286DA8;
+    cursor: pointer;
+}
+@media screen and (max-width: 900px) {
+    iframe {
+        max-width: 100% !important;
+        width: 100% !important;
+        height: 300px !important;
+    }
+}
