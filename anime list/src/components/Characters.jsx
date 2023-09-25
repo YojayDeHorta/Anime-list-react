@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Paper, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/Characters.css"
 export default function Characters({id}) {
     const [characters, setCharacters] = useState([])
@@ -14,7 +14,7 @@ export default function Characters({id}) {
         }catch (error) {console.log(error);} 
         finally {setLoading(false);}
     }
-    useState(() => {
+    useEffect(() => {
         getCharacters(id)
     },[])
     return (

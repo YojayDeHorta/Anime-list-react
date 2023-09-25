@@ -1,5 +1,5 @@
 import { Box, Divider, Grid } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReadMoreReact from 'read-more-react';
 import './styles/Reviews.css'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -14,12 +14,12 @@ export default function Reviews({id}) {
         try {
             const response = await fetch(`https://api.jikan.moe/v4/anime/${id}/reviews`)
             const data = await response.json();
-             console.log(data.data);
+            //  console.log(data.data);
              setReview(data.data);
         }catch (error) {console.log(error);} 
         finally {setLoading(false);}
     }
-    useState(() => {
+    useEffect(() => {
         getReviews(id)
     },[])
     return (
@@ -39,13 +39,13 @@ export default function Reviews({id}) {
                                 <Box >
                                     <strong>{review?.user?.username}</strong>
                                 </Box>
-                                <Box sx={{display:'flex',mt:2,mb:2}}>
+                                <Box sx={{display:'flex',mt:2,mb:2}} >
                                     {
                                         review?.tags[0] === "Recommended"?
-                                        <ThumbUpIcon fontSize="small" sx={{color:'green'}} />
+                                        <ThumbUpIcon fontSize="small" sx={{color:'#9fbdff'}} />
                                         :review?.tags[0] === "Mixed Feelings"?
-                                        <ThumbsUpDownIcon fontSize="small"/>
-                                        :<ThumbDownIcon sx={{color:'red'}} fontSize="small"/>
+                                        <ThumbsUpDownIcon sx={{color:'#a3a3a3'}} fontSize="small"/>
+                                        :<ThumbDownIcon sx={{color:'#ff9fa1'}} fontSize="small"/>
                                     }
                                     &nbsp; {review?.tags[0]}
                                 </Box>

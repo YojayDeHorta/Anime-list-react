@@ -28,6 +28,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <CssBaseline />
       </BrowserRouter>
     </ThemeProvider>
-    {/* <App /> */}
   </React.StrictMode>,
 )

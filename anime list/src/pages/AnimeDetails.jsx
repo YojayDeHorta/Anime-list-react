@@ -1,10 +1,12 @@
 import { Box, Button, Divider, Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import './styles/AnimeDetails.css';
 import Characters from "../components/Characters";
 import ReadMoreReact from 'read-more-react';
 import Reviews from "../components/Reviews";
+import InfoCard from "../components/InfoCard";
+import InfoCardMulti from "../components/InfoCardMulti";
 export default function AnimeDetails() {
     const [anime,setAnime] = useState({})
     const [loading,setLoading] = useState(true);
@@ -17,14 +19,14 @@ export default function AnimeDetails() {
         try {
             const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`)
             const data = await response.json();
-            //  console.log(data.data);
+            //   console.log(data.data);
             setAnime(data.data);
-            document.title = data.data.title+' Details' ?? 'Details'
+            document.title = data?.data?.title+' Details' ?? 'Details'
         }catch (error) {console.log(error);} 
         finally {setLoading(false);}
     }
     
-    useState(() => {
+    useEffect(() => {
         getAnime(id)
     },[])
     return (
@@ -35,54 +37,22 @@ export default function AnimeDetails() {
                 <Grid item md={4} sm={12} xs={12}>
                     <Box sx={{display:"flex", justifyContent:"center"}}>
                         <img src={anime?.images?.jpg.image_url} alt="" />
-
                     </Box>
                     <Typography variant="h6" color="initial">Information</Typography>
                     <Divider />
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Year: </Typography>
-                        <Typography variant="p" component="p">{anime?.year}</Typography>
-                    </Box> 
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Type: </Typography>
-                        <Typography variant="p" component="p">{anime?.type}</Typography>
-                    </Box> 
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Status: </Typography>
-                        <Typography variant="p" component="p">{anime?.status}</Typography>
-                    </Box>
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Episodes: </Typography>
-                        <Typography variant="p" component="p">{anime?.episodes}</Typography>
-                    </Box>
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Duration: </Typography>
-                        <Typography variant="p" component="p">{anime?.duration}</Typography>
-                    </Box>
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Rating: </Typography>
-                        <Typography variant="p" component="p">{anime?.rating}</Typography>
-                    </Box>
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >Genres: </Typography>
-                        <Typography variant="p" component="p">
-                            {
-                                anime?.genres?.map((genre,index) => {
-                                    return genre.name+(anime?.genres?.length==index+1 ? "." : ", ");
-                                })
-                            }
-                        </Typography>
-                    </Box>
-                    <Box sx={{display:"flex", margin:'10px 0'}}>
-                        <Typography sx={{fontWeight:"bold",mr:1}} >licensors: </Typography>
-                        <Typography variant="p" component="p">
-                            {
-                                anime?.licensors?.map((licensor,index) => {
-                                    return licensor.name+(anime?.licensors?.length==index+1 ? "." : ", ");
-                                })
-                            }
-                        </Typography>
-                    </Box>
+                    
+                    <InfoCard title={"Aired"} content={anime?.aired?.string}/>
+                    <InfoCard title={"Year"} content={anime?.year}/>
+                    <InfoCard title={"Type"} content={anime?.type}/>
+                    <InfoCard title={"Status"} content={anime?.status}/>
+                    <InfoCard title={"Episodes"} content={anime?.episodes}/>
+                    <InfoCard title={"Duration"} content={anime?.duration}/>
+                    <InfoCard title={"Rating"} content={anime?.rating}/>
+                    <InfoCardMulti title={"Genres"} array={anime?.genres}/>
+                    <InfoCardMulti title={"Licensors"} array={anime?.licensors}/>
+                    <InfoCardMulti title={"Studios"} array={anime?.studios}/>
+                    <InfoCardMulti title={"Themes"} array={anime?.themes}/>
+                    
                     
                 </Grid>
                 <Grid item md={8} sm={12} xs={12}>

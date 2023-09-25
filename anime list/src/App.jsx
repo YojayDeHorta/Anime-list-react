@@ -27,7 +27,7 @@ export default function App() {
       <Container >
         <Routes>
             <Route path='/' element={<Home/>}/>
-             <Route path='/anime/:id' element={<AnimeDetails/>}/>
+             <Route path='/anime/:id' element={<AnimeDetails/>} name="details"/>
             {/*<Route path='/a' element={<A/>}/>
             <Route path='/form' element={<Formulario/>}/> */}
             
