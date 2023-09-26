@@ -4,30 +4,25 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import InboxIcon from '@mui/icons-material/Inbox';
 import AnimeDetails from './pages/AnimeDetails';
+import { useRef, useState } from 'react';
 
 const navLinks = [
   {
     title:"home", path : "/", icon:<InboxIcon />
   },
-  /*{
-    title:"Anime Details", path : "/anime/",icon:<InboxIcon />
-  },
-  {
-    title:"a", path : "/a",icon:<InboxIcon />
-  },
-  {
-    title:"Form", path : "/form",icon:<InboxIcon />
-  },*/
 ]
 export default function App() {
+  
+
   return (
 
     <>
-      <Navbar navLinks={navLinks}/>
+      <Navbar navLinks={navLinks} />
       <Container >
         <Routes>
-            <Route path='/' element={<Home/>}/>
-             <Route path='/anime/:id' element={<AnimeDetails/>} name="details"/>
+            <Route path='/' element={<Home />} />
+            <Route path='/search/:name' element={<Home />} />
+             <Route path='/anime/:id' element={<AnimeDetails/>} name="details" />
             {/*<Route path='/a' element={<A/>}/>
             <Route path='/form' element={<Formulario/>}/> */}
             

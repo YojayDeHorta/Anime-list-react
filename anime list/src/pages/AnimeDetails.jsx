@@ -70,7 +70,7 @@ export default function AnimeDetails() {
                             setShowMore(!showMore)
                         }}>{showMore ? 'Show Less': 'Read More'}</Button>
                     </p> */}
-                    <ReadMoreReact key={anime.mal_id} text={""+anime.synopsis}  ideal={450} max={700} />
+                    <ReadMoreReact key={anime?.mal_id} text={""+anime?.synopsis}  ideal={450} max={700} />
                         
                     <h3 className="title">Trailer</h3>
                     <Box sx={{display:"flex", justifyContent:"center"}}>

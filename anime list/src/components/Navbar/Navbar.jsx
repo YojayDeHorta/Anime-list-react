@@ -2,14 +2,18 @@ import { Box, Button, Drawer, AppBar, Toolbar, Typography, IconButton, TextField
 import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import SearchIcon from '@mui/icons-material/Search';
 export default function Navbar({navLinks}) {
     const location = useLocation();
     const [open,setOpen]=useState(false);
+    const [animeSearch,setAnimeSearch]=useState("")
+    const navigate = useNavigate();
+    const handleClick = () => navigate('/search/'+animeSearch,{ token: '<new token>' });
 
+    
     return (
         <>
             <AppBar position="static" color="primary" >
@@ -33,8 +37,9 @@ export default function Navbar({navLinks}) {
                 {
                     location.pathname!="/"?
                     <Button color="inherit" component={NavLink} to="/" startIcon={<KeyboardReturnIcon />}>Return</Button>:
-                    <TextField id="standard-basic" variant="outlined" placeholder='Search anime'sx={{background:"white",borderRadius:2,mr:5}} 
-                    size="small" InputProps={{endAdornment: <IconButton > <SearchIcon /> </IconButton>}}/>
+                    <TextField id="standard-basic" variant="outlined" value={animeSearch} placeholder='Search anime'sx={{background:"white",borderRadius:2,mr:5}} 
+                    size="small" onChange={(newValue) => setAnimeSearch(newValue.target.value)} 
+                    InputProps={{endAdornment: <IconButton onClick={handleClick}> <SearchIcon /> </IconButton>}}/>
 
                 }
 

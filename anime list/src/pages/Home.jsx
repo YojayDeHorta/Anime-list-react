@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import AnimeCard from "../components/AnimeCard";
-import { Box, MenuItem, Pagination, Typography, IconButton } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { Box, Pagination, Typography, IconButton } from "@mui/material";
+import { useParams, useSearchParams } from "react-router-dom";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SelectFilter from "../components/SelectFilter";
 import DeleteIcon from '@mui/icons-material/Delete';
 export default function Home() {
+    let { name } = useParams();
+
     const [animes,setAnimes] = useState([]);
     const [loading,setLoading] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -17,9 +19,14 @@ export default function Home() {
     })
     const [deleteButton,setDeleteButton] = useState(true);
     useEffect(()=>{
-        getData();
-    },[])
-    const getData = async () => {
+        if (!name) {
+            getAnimeList();
+            return
+        }
+        console.log(name);
+
+    },[name])
+    const getAnimeList = async () => {
         try {
             let url = 'https://api.jikan.moe/v4/top/anime?'
             setAnimes([])
@@ -31,7 +38,6 @@ export default function Home() {
             const data = await response.json();
             setAnimes(data.data);
             document.title = "Home Page";
-
         }catch (error) {console.log(error);} 
         finally {setLoading(false);}
     }
@@ -39,7 +45,7 @@ export default function Home() {
         filters[filter]= (filter=="page") ? value : event.target.value
         if (filter!="page")filters["page"]= 1
         setFilters({...filters})
-        getData()
+        getAnimeList()
         setDeleteButton(false)
     }
     const resetFilters= () => {
@@ -49,8 +55,14 @@ export default function Home() {
             rating:"",
             page:1,
         })
-        getData()
+        getAnimeList()
         setDeleteButton(true)
+    }
+    const searchAnimeList = anime => async ()=>{
+        console.log(anime);
+         const response = await fetch(`https://api.jikan.moe/v4/anime?q=${anime}&order_by=popularity&sort=asc&sfw`);
+         const data = await response.json();
+         console.log(data);
     }
     return(
         <Box>
