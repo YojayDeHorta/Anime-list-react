@@ -31,7 +31,7 @@ export default function AnimeDetails() {
     },[])
     return (
         <Box>
-            <Typography variant="h5" color="initial">{anime.title}</Typography>
+            <Typography variant="h5" color="initial">{anime?.title}</Typography>
             <Divider />
             <Grid container sx={{mt:2}}>
                 <Grid item md={4} sm={12} xs={12}>
