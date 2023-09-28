@@ -18,10 +18,10 @@ export default function App() {
 
     <>
       <Navbar navLinks={navLinks} />
-      <Container >
+      <Container>
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/search/:name' element={<Home />} />
+            <Route path='/search/:nameanime' element={<Home />} />
              <Route path='/anime/:id' element={<AnimeDetails/>} name="details" />
             {/*<Route path='/a' element={<A/>}/>
             <Route path='/form' element={<Formulario/>}/> */}

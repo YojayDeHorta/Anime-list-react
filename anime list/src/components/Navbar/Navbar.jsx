@@ -12,7 +12,6 @@ export default function Navbar({navLinks}) {
     const [animeSearch,setAnimeSearch]=useState("")
     const navigate = useNavigate();
     const handleClick = () => navigate('/search/'+animeSearch,{ token: '<new token>' });
-
     
     return (
         <>
@@ -33,9 +32,8 @@ export default function Navbar({navLinks}) {
                     ))
                 } */}
                     
-
                 {
-                    location.pathname!="/"?
+                    location.pathname?.substring(0, 7)=="/anime/" ?
                     <Button color="inherit" component={NavLink} to="/" startIcon={<KeyboardReturnIcon />}>Return</Button>:
                     <TextField id="standard-basic" variant="outlined" value={animeSearch} placeholder='Search anime'sx={{background:"white",borderRadius:2,mr:5}} 
                     size="small" onChange={(newValue) => setAnimeSearch(newValue.target.value)} 

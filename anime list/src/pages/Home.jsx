@@ -6,7 +6,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import SelectFilter from "../components/SelectFilter";
 import DeleteIcon from '@mui/icons-material/Delete';
 export default function Home() {
-    let { name } = useParams();
+    let { nameanime } = useParams();
 
     const [animes,setAnimes] = useState([]);
     const [loading,setLoading] = useState(true);
@@ -17,15 +17,15 @@ export default function Home() {
         rating:"",
         page:1,
     })
+    const [maxPage,setMaxPage] = useState(1);
     const [deleteButton,setDeleteButton] = useState(true);
     useEffect(()=>{
-        if (!name) {
+        if (!nameanime) {
             getAnimeList();
             return
         }
-        console.log(name);
-
-    },[name])
+        searchAnimeList();
+    },[nameanime])
     const getAnimeList = async () => {
         try {
             let url = 'https://api.jikan.moe/v4/top/anime?'
@@ -37,6 +37,7 @@ export default function Home() {
             const response = await fetch(url)
             const data = await response.json();
             setAnimes(data.data);
+            setMaxPage(data.pagination.last_visible_page);
             document.title = "Home Page";
         }catch (error) {console.log(error);} 
         finally {setLoading(false);}
@@ -58,11 +59,13 @@ export default function Home() {
         getAnimeList()
         setDeleteButton(true)
     }
-    const searchAnimeList = anime => async ()=>{
-        console.log(anime);
-         const response = await fetch(`https://api.jikan.moe/v4/anime?q=${anime}&order_by=popularity&sort=asc&sfw`);
+    const searchAnimeList = async ()=>{
+
+         const response = await fetch(`https://api.jikan.moe/v4/anime?q=${nameanime}&order_by=popularity&sort=asc&sfw`);
          const data = await response.json();
-         console.log(data);
+         setAnimes(data.data);
+         console.log(animes);
+         setMaxPage(data.pagination.last_visible_page);
     }
     return(
         <Box>
@@ -108,9 +111,9 @@ export default function Home() {
                 )}
             </Box>
             
-            <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",mb:5}}>
+            <Box sx={{display:"flex",flexDirection:"column",alignItems:"center",mb:5, mt:5}}>
                 <Typography>Page: {filters.page}</Typography>
-                <Pagination count={10} page={filters.page} onChange={handleFilterChange("page")} />
+                <Pagination count={maxPage} page={filters.page} onChange={handleFilterChange("page")} />
             </Box>
             
         </Box>
