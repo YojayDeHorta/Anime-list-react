@@ -1,0 +1,53 @@
+.animeCard {
+    display: inline-block;
+    background: black;
+    padding: 0;
+    cursor: pointer;
+    width: 180px;
+    height: 250px;
+    margin: 10px;
+}
+
+.animeCard img {
+    display: block;
+
+    
+}
+.animeCard:hover .animeimg{
+    -webkit-filter: brightness(40%);
+    filter: brightness(40%);
+}
+.animeimg{
+    -webkit-transition: all 1s ease;
+   -moz-transition: all 1s ease;
+   -o-transition: all 1s ease;
+   -ms-transition: all 1s ease;
+   transition: all 1s ease;
+   width: 180px;
+   height: 250px;
+}
+@media screen and (max-width: 600px) {
+    .animeCard {
+        width: 130px;
+        height: 180px;
+        margin: 5px;
+       font-size: 5px!important;
+    }
+    .animeimg {
+        width: 130px;
+        height: 180px;
+    }
+    .animeTitle{
+        font-size: 12px;
+    }
+}
+@media screen and (min-width: 1500px) {
+    .animeCard {
+        width: 250px;
+        height: 320px;
+    }
+    .animeimg {
+        width: 250px;
+        height: 320px;
+    }
+}

@@ -1,4 +1,4 @@
-import { Box, Button, Drawer, AppBar, Toolbar, Typography, IconButton, TextField } from "@mui/material";
+import { Box, Button, Drawer, AppBar, Toolbar, Typography, IconButton, TextField, useTheme, useMediaQuery } from "@mui/material";
 import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
 import MenuIcon from '@mui/icons-material/Menu';
@@ -6,50 +6,59 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import SearchIcon from '@mui/icons-material/Search';
-export default function Navbar({navLinks}) {
+export default function Navbar({ navLinks }) {
     const location = useLocation();
-    const [open,setOpen]=useState(false);
-    const [animeSearch,setAnimeSearch]=useState("")
+    const [open, setOpen] = useState(false);
+    const [animeSearch, setAnimeSearch] = useState("")
     const navigate = useNavigate();
-    const handleClick = () => navigate('/search/'+animeSearch,{ token: '<new token>' });
-    
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+    const handleClick = () => {
+        console.log(animeSearch);
+        if (!animeSearch) navigate('/');
+        else navigate('/search/' + animeSearch, { token: '<new token>' });
+    }
+
     return (
         <>
-            <AppBar position="static" color="primary" >
-              <Toolbar sx={{minHeight:"50px!important "}} disableGutters>
-                <IconButton color="inherit" size="large" onClick={()=>setOpen(!open)} sx={{display:{xs:"flex",sm:"none"}}} >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" sx={{flexGrow:1 ,ml:5}}>
-                    Anime List 
-                </Typography>
-
-                <Box sx={{display:{xs:"none",sm:"block"}}}>
-                {/* {
+            <AppBar position="static" sx={{ background: "#070720" }} >
+                <Toolbar sx={{ minHeight: "70px!important ", display: "flex", justifyContent: "space-around" }} disableGutters>
+                    {/* <IconButton color="inherit" size="large" onClick={() => setOpen(!open)} sx={{ display: { xs: "flex", sm: "none" } }} >
+                        <MenuIcon />
+                    </IconButton> */}
+                    <Typography variant="h5" sx={{ ml: isSmall?1:5,fontSize:isSmall?"15px":"20px"}}>
+                        Anime<Box component="span" sx={{ color: "#E63334" }}> List </Box>
+                    </Typography>
+                    <Box>
+                        <Button color="inherit" component={NavLink} to="/" >Home</Button>
+                    </Box>
+                    <Box >
+                    {/* <Box sx={{ display: { xs: "none", sm: "block" } }}> */}
+                        {/* {
                     navLinks.map((link,index)=>(
-                        <Button color="inherit"component={NavLink} to={link.path} key={index}>{link.title}</Button>
-                        
+                      <Button color="inherit"component={NavLink} to={link.path} key={index}>{link.title}</Button>
+
                     ))
                 } */}
-                    
-                {
-                    location.pathname?.substring(0, 7)=="/anime/" ?
-                    <Button color="inherit" component={NavLink} to="/" startIcon={<KeyboardReturnIcon />}>Return</Button>:
-                    <TextField id="standard-basic" variant="outlined" value={animeSearch} placeholder='Search anime'sx={{background:"white",borderRadius:2,mr:5}} 
-                    size="small" onChange={(newValue) => setAnimeSearch(newValue.target.value)} 
-                    InputProps={{endAdornment: <IconButton onClick={handleClick}> <SearchIcon /> </IconButton>}}/>
 
-                }
+                        {
+                            // location.pathname?.substring(0, 7) == "/anime/" ?
+                            //     <Button color="inherit" component={NavLink} to="/" startIcon={<KeyboardReturnIcon />}>Return</Button> :
+                                <TextField id="standard-basic" variant="outlined" value={animeSearch} placeholder={isSmall?'Search':'Search anime'} sx={{ background: "white", borderRadius: 2, width:isSmall?"130px":"250px" }}
+                                    size="small" onChange={(newValue) => setAnimeSearch(newValue.target.value)}
+                                    InputProps={{ endAdornment: <IconButton onClick={handleClick}> <SearchIcon /> </IconButton> }} />
 
-                </Box>
-                
-              </Toolbar>
+                        }
+
+                    </Box>
+
+                </Toolbar>
             </AppBar>
 
             {/* <Button variant="container" onClick={()=>setOpen(true)}> open</Button> */}
-             <Drawer open={open} anchor="left" onClose={()=>setOpen(false)} sx={{display:{xs:"flex",sm:"none"}}}>
-                <NavListDrawer navLinks={navLinks} setOpen={setOpen}/> 
-            </Drawer> 
+            {/* <Drawer open={open} anchor="left" onClose={() => setOpen(false)} sx={{ display: { xs: "flex", sm: "none" } }}>
+                <NavListDrawer navLinks={navLinks} setOpen={setOpen} />
+            </Drawer> */}
 
         </>
     )

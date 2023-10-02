@@ -1,4 +1,4 @@
-import { Box, Divider, Grid } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ReadMoreReact from 'read-more-react';
 import './styles/Reviews.css'
@@ -33,7 +33,7 @@ export default function Reviews({id}) {
                     <Box key={index} sx={{mt:1}}>
                         <Box  sx={{display:'flex'}}>
                             <Box sx={{mr:2}}>
-                                <img src={review?.user?.images?.jpg?.image_url} alt="" className='userImg'/>
+                                <img src={review?.user?.images?.jpg?.image_url} alt={review?.user?.username} className='userImg'/>
                             </Box>
                             <Box>
                                 <Box >

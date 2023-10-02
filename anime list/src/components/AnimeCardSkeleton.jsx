@@ -1,18 +1,14 @@
-import { Box, CardMedia, Typography } from '@mui/material';
+import { useTheme } from '@emotion/react';
+import { Box, Skeleton, Typography, useMediaQuery } from '@mui/material';
 import Card from '@mui/material/Card';
-import './styles/AnimeCard.css';
-import { useNavigate } from 'react-router-dom';
-
-export default function AnimeCard({ anime }) {
-    let navigate = useNavigate(); 
-    const routeChange = () =>{ 
-        let path = `/anime/`+anime.mal_id; 
-        navigate(path);
-    }
+export default function AnimeCard() {
+    const theme = useTheme();
+    const isxl= useMediaQuery(theme.breakpoints.up('xl'))
+    const issm= useMediaQuery(theme.breakpoints.down('sm'))
     return (
-        <Card className='animeCard'  onClick={routeChange}>
+        <Card   sx={{margin:"10px",width:isxl? 250:issm?130:180,height:isxl? 320:issm?180:250}} >
             <Box sx={{ position: 'relative' }}>
-                <CardMedia className='animeimg' component="img" title={anime.title} image={anime.images.jpg.image_url}  />
+                <Skeleton variant="rectangular"  width={isxl? 250:issm?130:180} height={isxl? 320:issm?180:250}/>
                 <Box sx={{
                     position: 'absolute',
                     bottom: 0,
@@ -24,7 +20,8 @@ export default function AnimeCard({ anime }) {
                     fontSize:'9px'
                 }}    >
                     <Typography gutterBottom variant="div" component="h2" className='animeTitle'>
-                        {anime.title}
+                    <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+
                     </Typography>
                 </Box>
             </Box>

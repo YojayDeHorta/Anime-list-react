@@ -1,0 +1,11 @@
+
+@media screen and (max-width: 900px) {
+    .containerPrincipal {
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    .filterClass{
+        display: none;
+    }
+}

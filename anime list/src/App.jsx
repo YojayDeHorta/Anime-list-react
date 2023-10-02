@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import InboxIcon from '@mui/icons-material/Inbox';
 import AnimeDetails from './pages/AnimeDetails';
-import { useRef, useState } from 'react';
 
 const navLinks = [
   {
@@ -18,7 +17,7 @@ export default function App() {
 
     <>
       <Navbar navLinks={navLinks} />
-      <Container>
+      <Container maxWidth={false} >
         <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/search/:nameanime' element={<Home />} />
