@@ -22,16 +22,16 @@ export default function Navbar({ navLinks }) {
     return (
         <>
             <AppBar position="static" sx={{ background: "#070720" }} >
-                <Toolbar sx={{ minHeight: "70px!important ", display: "flex", justifyContent: "space-around" }} disableGutters>
+                <Toolbar sx={{ minHeight: "70px!important ", display: "flex", justifyContent: "space-between" }} disableGutters>
                     {/* <IconButton color="inherit" size="large" onClick={() => setOpen(!open)} sx={{ display: { xs: "flex", sm: "none" } }} >
                         <MenuIcon />
                     </IconButton> */}
-                    <Typography variant="h5" sx={{ ml: isSmall?1:5,fontSize:isSmall?"15px":"20px"}}>
-                        Anime<Box component="span" sx={{ color: "#E63334" }}> List </Box>
-                    </Typography>
-                    <Box>
+                    <Button variant="h5" sx={{ ml: isSmall?1:5,fontSize:isSmall?"15px":"20px",textTransform: 'none'}} component={NavLink} to="/" >
+                        Anime&nbsp;<Box component="span" sx={{ color: "#E63334" }}>List</Box>
+                    </Button>
+                    <Box sx={{ display: { xs: "none", sm: "flex" } }}>
                         <Button color="inherit" component={NavLink} to="/" >Home</Button>
-                    </Box>
+                    </Box>  
                     <Box >
                     {/* <Box sx={{ display: { xs: "none", sm: "block" } }}> */}
                         {/* {
@@ -44,7 +44,7 @@ export default function Navbar({ navLinks }) {
                         {
                             // location.pathname?.substring(0, 7) == "/anime/" ?
                             //     <Button color="inherit" component={NavLink} to="/" startIcon={<KeyboardReturnIcon />}>Return</Button> :
-                                <TextField id="standard-basic" variant="outlined" value={animeSearch} placeholder={isSmall?'Search':'Search anime'} sx={{ background: "white", borderRadius: 2, width:isSmall?"130px":"250px" }}
+                                <TextField id="standard-basic" variant="outlined" value={animeSearch} placeholder="Search..." sx={{ mr:5, background: "white", borderRadius: 2, width:isSmall?"190px":"250px" }}
                                     size="small" onChange={(newValue) => setAnimeSearch(newValue.target.value)}
                                     InputProps={{ endAdornment: <IconButton onClick={handleClick}> <SearchIcon /> </IconButton> }} />
 

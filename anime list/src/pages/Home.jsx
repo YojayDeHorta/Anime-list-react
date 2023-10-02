@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AnimeCard from "../components/AnimeCard";
 import AnimeCardSkeleton from "../components/AnimeCardSkeleton";
-import { Box, Pagination, Typography, Grid } from "@mui/material";
+import { Box, Pagination, Typography, Grid, useTheme, useMediaQuery } from "@mui/material";
 import { useParams } from "react-router-dom";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SelectFilter from "../components/SelectFilter";
@@ -11,6 +11,8 @@ import './styles/Home.css';
 
 export default function Home() {
     let { nameanime } = useParams();
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     let url = 'https://api.jikan.moe/v4/top/anime?'
     const [animes,setAnimes] = useState([]);
     const [popularAnimes,setPopularAnimes] = useState([]);
@@ -64,17 +66,20 @@ export default function Home() {
     }
 
     const searchAnimeList = async ()=>{
+        try {
          const response = await fetch(`https://api.jikan.moe/v4/anime?q=${nameanime}&order_by=popularity&sort=asc&sfw`);
          const data = await response.json();
          setAnimes(data.data);
          console.log(animes);
          setMaxPage(data.pagination.last_visible_page);
+        }catch (error) {console.log(error);}
     }
     const getPopularity = async () =>{
+        try {
         const response = await fetch('https://api.jikan.moe/v4/top/anime?filter=bypopularity')
         const data = await response.json();
         setPopularAnimes(data.data);
-        
+        }catch (error) {console.log(error);}
     }
     return(
         <Grid container spacing={0} sx={{mt:1}} className="containerPrincipal">
@@ -85,7 +90,7 @@ export default function Home() {
                             <AnimeCardSkeleton key={i}/>
                         ))
                     ) : (
-                        animes.map(anime =>(
+                        animes?.map(anime =>(
                             <AnimeCard key={anime.mal_id} anime={anime}/>
                         ))
                     )}
@@ -137,7 +142,7 @@ export default function Home() {
                             <AnimeCardSkeleton key={i}/>
                         ))
                     ) : (
-                        popularAnimes.slice(0, 4).map(anime =>(
+                        popularAnimes?.slice(0, 4).map(anime =>(
                             <AnimeCard key={anime.mal_id} anime={anime}/>
                         ))
                     )}
@@ -145,7 +150,7 @@ export default function Home() {
             </Grid>
             <Grid item xs={12} sx={{display:"flex",flexDirection:"column",alignItems:"center",mb:5, mt:5}}>
                     <Typography>Page: {filters.page}</Typography>
-                    <Pagination count={maxPage} page={filters.page} onChange={handleFilterChange("page")} />
+                    <Pagination count={maxPage} page={filters.page} onChange={handleFilterChange("page")} color="secondary" variant="outlined" shape="rounded" size={isSmall?"small":""} />
             </Grid>
         </Grid>
 

@@ -12,7 +12,7 @@ export default function AnimeCard({ anime }) {
     return (
         <Card className='animeCard'  onClick={routeChange}>
             <Box sx={{ position: 'relative' }}>
-                <CardMedia className='animeimg' component="img" title={anime.title} image={anime.images.jpg.image_url}  />
+                <CardMedia className='animeimg' component="img" loading="lazy" title={anime.title} image={anime.images.jpg.image_url}  />
                 <Box sx={{
                     position: 'absolute',
                     bottom: 0,

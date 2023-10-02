@@ -37,7 +37,7 @@ export default function Characters({id}) {
                             minWidth:300
                         }} key={index}> 
                             <Box sx={{display:"flex", }}>
-                                <img className="imgActors" src={character?.character?.images?.webp?.image_url} alt={character?.character?.name} />
+                                <img className="imgActors" src={character?.character?.images?.webp?.image_url} alt={character?.character?.name} loading="lazy"/>
                                 <Box className="charactersBox">
                                     <strong>{character?.character?.name}</strong>
                                     <p>{character?.role}</p>
@@ -49,7 +49,7 @@ export default function Characters({id}) {
                                     <Typography component="p" variant="p" sx={{textAlign:"right"}}>japanese</Typography>
                                 </Box>
 
-                                <img className="imgActors" src={character?.voice_actors[0]?.person?.images.jpg.image_url} alt={character?.voice_actors[0]?.person?.name} />
+                                <img className="imgActors" src={character?.voice_actors[0]?.person?.images.jpg.image_url} alt={character?.voice_actors[0]?.person?.name} loading="lazy"/>
                             </Box>
                             
 

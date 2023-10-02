@@ -33,7 +33,7 @@ export default function Reviews({id}) {
                     <Box key={index} sx={{mt:1}}>
                         <Box  sx={{display:'flex'}}>
                             <Box sx={{mr:2}}>
-                                <img src={review?.user?.images?.jpg?.image_url} alt={review?.user?.username} className='userImg'/>
+                                <img src={review?.user?.images?.jpg?.image_url} alt={review?.user?.username} className='userImg' loading="lazy"/>
                             </Box>
                             <Box>
                                 <Box >

@@ -24,12 +24,13 @@ export default function AnimeDetails() {
     }
 
     useEffect(() => {
+        window.scrollTo({top: 0,left: 0,})
         getAnime(id)
     }, [])
     
     return (
-        <Box>
-            <Typography variant="h5" color="initial">{anime?.title}</Typography>
+        <Box sx={{mt:3}}>
+            <Typography variant="h4" color="initial">{anime?.title}</Typography>
             <Divider />
             <Grid container sx={{ mt: 2 }}>
                 <Grid item md={4} sm={12} xs={12}>
