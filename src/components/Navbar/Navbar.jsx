@@ -14,11 +14,13 @@ export default function Navbar({ navLinks }) {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const handleClick = () => {
-        console.log(animeSearch);
-        if (!animeSearch) navigate('/');
+        if (!animeSearch) Homepage();
         else navigate('/search/' + animeSearch, { token: '<new token>' });
     }
-
+    function Homepage(){ 
+        navigate('/')
+        window.location.reload(); 
+    }
     return (
         <>
             <AppBar position="static" sx={{ background: "#070720" }} >
@@ -26,11 +28,11 @@ export default function Navbar({ navLinks }) {
                     {/* <IconButton color="inherit" size="large" onClick={() => setOpen(!open)} sx={{ display: { xs: "flex", sm: "none" } }} >
                         <MenuIcon />
                     </IconButton> */}
-                    <Button variant="h5" sx={{ ml: isSmall?1:5,fontSize:isSmall?"15px":"20px",textTransform: 'none'}} component={NavLink} to="/" >
+                    <Button variant="h5" sx={{ ml: isSmall?1:5,fontSize:isSmall?"15px":"20px",textTransform: 'none'}}  onClick={ Homepage } >
                         Anime&nbsp;<Box component="span" sx={{ color: "#E63334" }}>List</Box>
                     </Button>
                     <Box sx={{ display: { xs: "none", sm: "flex" } }}>
-                        <Button color="inherit" component={NavLink} to="/" >Home</Button>
+                        <Button color="inherit"  onClick={ Homepage } >Home</Button>
                     </Box>  
                     <Box >
                     {/* <Box sx={{ display: { xs: "none", sm: "block" } }}> */}

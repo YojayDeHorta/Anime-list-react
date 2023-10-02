@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AnimeCard from "../components/AnimeCard";
 import AnimeCardSkeleton from "../components/AnimeCardSkeleton";
 import { Box, Pagination, Typography, Grid, useTheme, useMediaQuery } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import SelectFilter from "../components/SelectFilter";
 import PreviewIcon from '@mui/icons-material/Preview';
@@ -17,15 +17,16 @@ export default function Home() {
     const [animes,setAnimes] = useState([]);
     const [popularAnimes,setPopularAnimes] = useState([]);
     const [loading,setLoading] = useState(true);
+    const [searchParams,setSearchParams] = useSearchParams();
     const [filters,setFilters] = useState({
-        top_anime:"",
-        type:"",
-        rating:"",
-        page:1,
+        top_anime:searchParams.get("top_anime")||"",
+        type:searchParams.get("type")||"",
+        rating:searchParams.get("rating")||"",
+        page:Number(searchParams.get("page"))||1,
     })
     const [maxPage,setMaxPage] = useState(1);
-    const [deleteButton,setDeleteButton] = useState(true);
     useEffect(()=>{ 
+       
         document.title = "Home Page";
         if (!nameanime) {
             getAnimeList();
@@ -33,12 +34,12 @@ export default function Home() {
             return
         }
         searchAnimeList();
-    },[nameanime])
+    },[nameanime,searchParams])
     const getAnimeList = async () => {
         try {
             url = 'https://api.jikan.moe/v4/top/anime?'
             setAnimes([])
-           if (filters.top_anime) url+=`filter=${filters.top_anime}&`
+            if (filters.top_anime) url+=`filter=${filters.top_anime}&`
             if (filters.type) url+=`type=${filters.type}&`
             if (filters.rating) url+=`rating=${filters.rating}&`
             if (filters.page) url+=`page=${filters.page}&`
@@ -53,8 +54,8 @@ export default function Home() {
         filters[filter]= (filter=="page") ? value : event.target.value
         if (filter!="page"){
             filters["page"]= 1
-            setDeleteButton(false)
         }
+        setSearchParams(filters)
         setFilters({...filters})
         getAnimeList()
         window.scrollTo({
@@ -67,12 +68,13 @@ export default function Home() {
 
     const searchAnimeList = async ()=>{
         try {
-         const response = await fetch(`https://api.jikan.moe/v4/anime?q=${nameanime}&order_by=popularity&sort=asc&sfw`);
-         const data = await response.json();
-         setAnimes(data.data);
-         console.log(animes);
-         setMaxPage(data.pagination.last_visible_page);
+            setAnimes([])
+            const response = await fetch(`https://api.jikan.moe/v4/anime?q=${nameanime}&order_by=popularity&sort=asc&sfw`);
+            const data = await response.json();
+            setAnimes(data.data);
+            setMaxPage(data.pagination.last_visible_page);
         }catch (error) {console.log(error);}
+        finally {setLoading(false);}
     }
     const getPopularity = async () =>{
         try {
@@ -83,7 +85,7 @@ export default function Home() {
     }
     return(
         <Grid container spacing={0} sx={{mt:1}} className="containerPrincipal">
-            <Grid item xs={10}>
+            <Grid item xs={nameanime?12:10}>
                 <Box sx={{display:"flex",flexWrap:"wrap", justifyContent:"center"}}>
                     {loading ? (
                         [...Array(25)].map((x, i) =>(
@@ -97,7 +99,7 @@ export default function Home() {
                 </Box>
 
             </Grid >
-            <Grid item xs={2}  className="filterClass">
+            <Grid item xs={2}  className="filterClass" sx={{display:nameanime?"none":""}}>
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                     <FilterListIcon  fontSize="large"/>
                     <SelectFilter filter={filters.top_anime} labelFilter="Filter by" size={150} filterfunction={handleFilterChange("top_anime")}
